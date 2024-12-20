@@ -109,18 +109,18 @@ public final class In {
      * @throws IllegalArgumentException if cannot open {@code url}
      * @throws IllegalArgumentException if {@code url} is {@code null}
      */
-    public In(URL url) {
-        if (url == null) throw new IllegalArgumentException("url argument is null");
-        try {
-            URLConnection site = url.openConnection();
-            InputStream is     = site.getInputStream();
-            scanner            = new Scanner(new BufferedInputStream(is), CHARSET_NAME);
-            scanner.useLocale(LOCALE);
-        }
-        catch (IOException ioe) {
-            throw new IllegalArgumentException("Could not open " + url, ioe);
-        }
-    }
+    // public In(URL url) {
+    //     if (url == null) throw new IllegalArgumentException("url argument is null");
+    //     try {
+    //         URLConnection site = url.openConnection();
+    //         InputStream is     = site.getInputStream();
+    //         scanner            = new Scanner(new BufferedInputStream(is), CHARSET_NAME);
+    //         scanner.useLocale(LOCALE);
+    //     }
+    //     catch (IOException ioe) {
+    //         throw new IllegalArgumentException("Could not open " + url, ioe);
+    //     }
+    // }
 
    /**
      * Initializes an input stream from a file.
