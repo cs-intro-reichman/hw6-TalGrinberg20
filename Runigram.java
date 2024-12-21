@@ -38,7 +38,49 @@ public class Runigram {
 		Color b  = new Color(200, 20, 40);
 		print(blend(a, b, 0.25));	
 
-		
+		Color[][] img1 = read("escher.ppm");
+        Color[][] img2 = read("eyes.ppm");	
+		Color[][] blended = Runigram.blend(img1, img2, 0);
+        Color[][] res = img2;
+		if (blended == null || res == null) {
+            System.out.println("false"); 
+        }
+        boolean res1 = TesterRunigram.compareImages(blended, res);
+
+        blended = Runigram.blend(img1, img2, 0.21);
+        res = TesterRunigram.safeRead("expected_results/blend_021.ppm");
+        
+        if (blended == null || res == null) {
+            System.out.println("false");
+        }
+        boolean res2 = TesterRunigram.compareImages(blended, res);
+
+
+        blended = Runigram.blend(img1, img2, 0.5);
+        res = TesterRunigram.safeRead("expected_results/blend_05.ppm");
+        
+        if (blended == null || res == null) {
+            System.out.println("false"); 
+        }
+        boolean res3 = TesterRunigram.compareImages(blended, res);
+
+        blended = Runigram.blend(img1, img2, 0.75);
+        res = read("expected_results/blend_075.ppm");
+        
+        if (blended == null || res == null) {
+            System.out.println("false");
+        }
+        boolean res4 = TesterRunigram.compareImages(blended, res);
+
+        blended = Runigram.blend(img1, img2, 1);
+        res = img1;
+        
+        if (blended == null || res == null) {
+            System.out.println("false");;
+        }
+        boolean res5 = TesterRunigram.compareImages(blended, res);
+        
+        System.out.println(res1 && res2 && res3 && res4 && res5);	
 		//// Write here whatever code you need in order to test your work.
 		//// You can continue using the image array.
 	}
@@ -167,9 +209,16 @@ public class Runigram {
 	 */
 	public static Color blend(Color c1, Color c2, double alpha) {
 		int red, green, blue;
-		red = (int)((alpha * c1.getRed()) + (((1-alpha) * c2.getRed())));
-		green = (int)((alpha * c1.getGreen())) + ((int)((1-alpha) * c2.getGreen()));
-		blue = (int)((alpha * c1.getBlue())) + ((int)((1-alpha) * c2.getBlue()));
+    // Compute blended RGB values
+    	 red = (int)((alpha * c1.getRed()) + ((1 - alpha) * c2.getRed()));
+    	 green = (int)((alpha * c1.getGreen()) + ((1 - alpha) * c2.getGreen()));
+    	 blue = (int)((alpha * c1.getBlue()) + ((1 - alpha) * c2.getBlue()));
+
+    // Ensure RGB values are within bounds [0, 255]
+    	red = Math.max(0, Math.min(255, red));
+    	green = Math.max(0, Math.min(255, green));
+    	blue = Math.max(0, Math.min(255, blue));
+
 		Color blendedColor = new Color (red,green,blue);
 		return blendedColor;
 	}
